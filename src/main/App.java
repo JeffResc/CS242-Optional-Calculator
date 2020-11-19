@@ -1,6 +1,8 @@
 package main;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +31,7 @@ public class App extends Application {
         buttonSqrt.setTranslateX(0);
         buttonSqrt.setTranslateY(25);
 
+
         // Power Button
         Button buttonPow = new Button();
         buttonPow.setText("^");
@@ -53,11 +56,23 @@ public class App extends Application {
         buttonMult.setTranslateX(100);
         buttonMult.setTranslateY(25);
 
+        buttonMult.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "*" );
+            }
+        });
+
         // Div Button
         Button buttonDiv = new Button();
         buttonDiv.setText("/");
         buttonDiv.setTranslateX(100);
         buttonDiv.setTranslateY(50);
+
+        buttonDiv.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "/" );
+            }
+        });
 
         // Plus Button
         Button buttonPlus = new Button();
@@ -65,11 +80,23 @@ public class App extends Application {
         buttonPlus.setTranslateX(100);
         buttonPlus.setTranslateY(75);
 
+        buttonPlus.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "+" );
+            }
+        });
+
         // Minus Button
         Button buttonMin = new Button();
         buttonMin.setText("-");
         buttonMin.setTranslateX(100);
         buttonMin.setTranslateY(100);
+
+        buttonMin.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "-" );
+            }
+        });
         
         // 7 Button
         Button button7 = new Button();
@@ -77,11 +104,23 @@ public class App extends Application {
         button7.setTranslateX(0);
         button7.setTranslateY(50);
 
+        button7.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "7" );
+            }
+        });
+
         // 4 Button
         Button button4 = new Button();
         button4.setText("4");
         button4.setTranslateX(0);
         button4.setTranslateY(75);
+
+        button4.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "4" );
+            }
+        });
 
         // 1 Button
         Button button1 = new Button();
@@ -89,11 +128,23 @@ public class App extends Application {
         button1.setTranslateX(0);
         button1.setTranslateY(100);
 
+        button1.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "1" );
+            }
+        });
+
         // 8 Button
         Button button8 = new Button();
         button8.setText("8");
         button8.setTranslateX(25);
         button8.setTranslateY(50);
+
+        button8.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "8" );
+            }
+        });
 
         // 5 Button
         Button button5 = new Button();
@@ -101,11 +152,23 @@ public class App extends Application {
         button5.setTranslateX(25);
         button5.setTranslateY(75);
 
+        button5.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "5" );
+            }
+        });
+
         // 2 Button
         Button button2 = new Button();
         button2.setText("2");
         button2.setTranslateX(25);
         button2.setTranslateY(100);
+
+        button2.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "2" );
+            }
+        });
 
         // 9 Button
         Button button9 = new Button();
@@ -113,17 +176,35 @@ public class App extends Application {
         button9.setTranslateX(50);
         button9.setTranslateY(50);
 
+        button9.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "9" );
+            }
+        });
+
         // 6 Button
         Button button6 = new Button();
         button6.setText("6");
         button6.setTranslateX(50);
         button6.setTranslateY(75);
 
+        button6.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "6" );
+            }
+        });
+
         // 3 Button
         Button button3 = new Button();
         button3.setText("3");
         button3.setTranslateX(50);
         button3.setTranslateY(100);
+
+        button3.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "3" );
+            }
+        });
 
         // Scene
         Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3);
@@ -133,6 +214,8 @@ public class App extends Application {
         stage.setTitle("Calculator");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) throws Exception {
