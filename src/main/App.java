@@ -7,6 +7,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import main.Calculator;
@@ -25,12 +27,27 @@ public class App extends Application {
         entryTextField.setTranslateX(0);
         entryTextField.setTranslateY(0);
 
+        entryTextField.setOnKeyPressed( new EventHandler<KeyEvent>() {
+            // change color of second button to red if r is pressed,
+            // green if g is pressed, and blue if b is pressed
+            public void handle( KeyEvent ke ) {
+                if ( ke.getCode() == KeyCode.ENTER ) {
+                    entryTextField.clear();
+                }
+            }
+        });
+
         // Square Root Button
         Button buttonSqrt = new Button();
         buttonSqrt.setText("√");
         buttonSqrt.setTranslateX(0);
         buttonSqrt.setTranslateY(25);
 
+        buttonSqrt.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "√" );
+            }
+        });
 
         // Power Button
         Button buttonPow = new Button();
@@ -38,17 +55,35 @@ public class App extends Application {
         buttonPow.setTranslateX(25);
         buttonPow.setTranslateY(25);
 
+        buttonPow.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "^" );
+            }
+        });
+
         // Square Button
         Button buttonSq = new Button();
         buttonSq.setText("x²");
         buttonSq.setTranslateX(50);
         buttonSq.setTranslateY(25);
 
+        buttonSq.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "²" );
+            }
+        });
+
         // Negate Button
         Button buttonNeg = new Button();
         buttonNeg.setText("(-)");
         buttonNeg.setTranslateX(75);
         buttonNeg.setTranslateY(25);
+
+        buttonNeg.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.setText( entryTextField.getText() + "(-)" );
+            }
+        });
 
         // Mult Button
         Button buttonMult = new Button();
