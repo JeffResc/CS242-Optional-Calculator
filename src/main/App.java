@@ -11,13 +11,62 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import main.Compute;
-
 public class App extends Application {
     private final int SCENE_WIDTH = 500;
     private final int SCENE_HEIGHT = 250;
-    private Compute compute = new Compute();
+    private Calculator calculator = new Calculator();
     private TextField entryTextField;
+
+    private Boolean shouldClear = false;
+
+    private void updateDisplayedValue() {
+        String currentValueStr = Float.toString(calculator.getCurrentValue());
+        if (currentValueStr.endsWith(".0"))
+            currentValueStr = currentValueStr.substring(0, currentValueStr.length() - 2);
+        entryTextField.setText(currentValueStr);
+    }
+
+    private void useEquals() {
+        float f = Float.parseFloat(entryTextField.getText());
+        calculator.equals(f);
+        updateDisplayedValue();
+    }
+
+    private void useOperator(String operator) {
+        float f = Float.parseFloat(entryTextField.getText());
+        switch (operator) {
+            case Calculator.ADD_OP:
+            case Calculator.SUB_OP:
+            case Calculator.MULT_OP:
+            case Calculator.DIV_OP:
+            case Calculator.POW_OP:
+                calculator.setCurrentOperator(operator);
+                calculator.setCurrentValue(f);
+                entryTextField.setText(entryTextField.getText()+operator);
+                shouldClear = true;
+                break;
+            case Calculator.SQRT_OP:
+                calculator.sqrtValue(f);
+                updateDisplayedValue();
+                break;
+            case Calculator.NEG_OP:
+                calculator.negValue(f);
+                updateDisplayedValue();
+                break;
+            case Calculator.SQ_OP:
+                calculator.sqValue(f);
+                updateDisplayedValue();
+                break;
+        }
+    }
+
+    private void useButton(String s) {
+        if (shouldClear) {
+            shouldClear = false;
+            entryTextField.setText(s);
+        } else
+            entryTextField.setText(entryTextField.getText() + s);
+    }
 
     @Override
     public void start(Stage stage) {
@@ -26,61 +75,75 @@ public class App extends Application {
         entryTextField.setTranslateX(0);
         entryTextField.setTranslateY(0);
 
-        entryTextField.setOnKeyPressed( new EventHandler<KeyEvent>() {
-            // change color of second button to red if r is pressed,
-            // green if g is pressed, and blue if b is pressed
-            public void handle( KeyEvent ke ) {
-                if ( ke.getCode() == KeyCode.ENTER ) {
-                    entryTextField.clear();
-                }
-            }
-        });
-
         // Square Root Button
         Button buttonSqrt = new Button();
-        buttonSqrt.setText("√");
+        buttonSqrt.setText(Calculator.SQRT_OP);
         buttonSqrt.setTranslateX(0);
         buttonSqrt.setTranslateY(25);
 
         buttonSqrt.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "√" );
+                useOperator(buttonSqrt.getText());
             }
         });
 
         // Power Button
         Button buttonPow = new Button();
-        buttonPow.setText("^");
+        buttonPow.setText(Calculator.POW_OP);
         buttonPow.setTranslateX(25);
         buttonPow.setTranslateY(25);
 
         buttonPow.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "^" );
+                useOperator(buttonPow.getText());
             }
         });
 
         // Square Button
         Button buttonSq = new Button();
-        buttonSq.setText("x²");
+        buttonSq.setText(Calculator.SQ_OP);
         buttonSq.setTranslateX(50);
         buttonSq.setTranslateY(25);
 
         buttonSq.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "²" );
+                useOperator(buttonSq.getText());
             }
         });
 
         // Negate Button
         Button buttonNeg = new Button();
-        buttonNeg.setText("(-)");
+        buttonNeg.setText(Calculator.NEG_OP);
         buttonNeg.setTranslateX(75);
         buttonNeg.setTranslateY(25);
 
         buttonNeg.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "(-)" );
+                useOperator(buttonNeg.getText());
+            }
+        });
+
+        // Decimal Button
+        Button buttonDec = new Button();
+        buttonDec.setText(".");
+        buttonDec.setTranslateX(75);
+        buttonDec.setTranslateY(50);
+
+        buttonDec.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useButton(buttonDec.getText());
+            }
+        });
+
+        // Equals Button
+        Button buttonEq = new Button();
+        buttonEq.setText("=");
+        buttonEq.setTranslateX(75);
+        buttonEq.setTranslateY(100);
+
+        buttonEq.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useEquals();
             }
         });
 
@@ -92,43 +155,43 @@ public class App extends Application {
 
         buttonMult.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "*" );
+                useOperator(buttonMult.getText());
             }
         });
 
         // Div Button
         Button buttonDiv = new Button();
-        buttonDiv.setText("/");
+        buttonDiv.setText(Calculator.DIV_OP);
         buttonDiv.setTranslateX(100);
         buttonDiv.setTranslateY(50);
 
         buttonDiv.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "/" );
+                useOperator(buttonDiv.getText());
             }
         });
 
-        // Plus Button
+        // Add Button
         Button buttonPlus = new Button();
-        buttonPlus.setText("+");
+        buttonPlus.setText(Calculator.ADD_OP);
         buttonPlus.setTranslateX(100);
         buttonPlus.setTranslateY(75);
 
         buttonPlus.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "+" );
+                useOperator(buttonPlus.getText());
             }
         });
 
-        // Minus Button
+        // Subtract Button
         Button buttonMin = new Button();
-        buttonMin.setText("-");
+        buttonMin.setText(Calculator.SUB_OP);
         buttonMin.setTranslateX(100);
         buttonMin.setTranslateY(100);
 
         buttonMin.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "-" );
+                useOperator(buttonMin.getText());
             }
         });
         
@@ -140,7 +203,7 @@ public class App extends Application {
 
         button7.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "7" );
+                useButton(button7.getText());
             }
         });
 
@@ -152,7 +215,7 @@ public class App extends Application {
 
         button4.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "4" );
+                useButton(button4.getText());
             }
         });
 
@@ -164,7 +227,7 @@ public class App extends Application {
 
         button1.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "1" );
+                useButton(button1.getText());
             }
         });
 
@@ -176,7 +239,7 @@ public class App extends Application {
 
         button8.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "8" );
+                useButton(button8.getText());
             }
         });
 
@@ -188,7 +251,7 @@ public class App extends Application {
 
         button5.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "5" );
+                useButton(button5.getText());
             }
         });
 
@@ -200,7 +263,7 @@ public class App extends Application {
 
         button2.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "2" );
+                useButton(button2.getText());
             }
         });
 
@@ -212,7 +275,7 @@ public class App extends Application {
 
         button9.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "9" );
+                useButton(button9.getText());
             }
         });
 
@@ -224,7 +287,7 @@ public class App extends Application {
 
         button6.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "6" );
+                useButton(button6.getText());
             }
         });
 
@@ -236,19 +299,110 @@ public class App extends Application {
 
         button3.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
-                entryTextField.setText( entryTextField.getText() + "3" );
+                useButton(button3.getText());
+            }
+        });
+
+        // 0 Button
+        Button button0 = new Button();
+        button0.setText("0");
+        button0.setTranslateX(75);
+        button0.setTranslateY(75);
+
+        button0.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useButton(button0.getText());
+            }
+        });
+
+        // Clear Button
+        Button buttonClear = new Button();
+        buttonClear.setText("C");
+        buttonClear.setTranslateX(125);
+        buttonClear.setTranslateY(25);
+
+        buttonClear.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.clear();
+                calculator.clearValue();
+            }
+        });
+
+        // Clear Entry Button
+        Button buttonClearEntry = new Button();
+        buttonClearEntry.setText("CE");
+        buttonClearEntry.setTranslateX(125);
+        buttonClearEntry.setTranslateY(50);
+
+        buttonClearEntry.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                entryTextField.clear();
             }
         });
 
         // Scene
-        Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3);
+        Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonDec, buttonEq, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3, button0, buttonClear, buttonClearEntry);
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+
+        // Key Events
+        root.setOnKeyPressed( new EventHandler<KeyEvent>() {
+            // change color of second button to red if r is pressed,
+            // green if g is pressed, and blue if b is pressed
+            public void handle( KeyEvent ke ) {
+                switch (ke.getCode()) {
+                    case ENTER:
+                        useEquals();
+                        break;
+                    case NUMPAD1:
+                    case DIGIT1:
+                        useButton("1");
+                        break;
+                    case NUMPAD2:
+                    case DIGIT2:
+                        useButton("2");
+                        break;
+                    case NUMPAD3:
+                    case DIGIT3:
+                        useButton("3");
+                        break;
+                    case NUMPAD4:
+                    case DIGIT4:
+                        useButton("4");
+                        break;
+                    case NUMPAD5:
+                    case DIGIT5:
+                        useButton("5");
+                        break;
+                    case NUMPAD6:
+                    case DIGIT6:
+                        useButton("6");
+                        break;
+                    case NUMPAD7:
+                    case DIGIT7:
+                        useButton("7");
+                        break;
+                    case NUMPAD8:
+                    case DIGIT8:
+                        useButton("8");
+                        break;
+                    case NUMPAD9:
+                    case DIGIT9:
+                        useButton("9");
+                        break;
+                    case NUMPAD0:
+                    case DIGIT0:
+                        useButton("0");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         // Stage
         stage.setTitle("Calculator");
         stage.setScene(scene);
         stage.show();
-
 
     }
 
