@@ -57,6 +57,13 @@ public class App extends Application {
     }
 
     /**
+     * Method that the backspace button calls
+     */
+    private void useBackspace() {
+        entryTextField.setText(entryTextField.getText().substring(0, entryTextField.getText().length()-1));
+    }
+
+    /**
      * Method that any number or decimal button calls
      */
     private void useNumButton(String s) {
@@ -237,6 +244,17 @@ public class App extends Application {
             }
         });
 
+        // Backspace Button
+        Button buttonBackspace = new Button();
+        buttonBackspace.setText("⇦");
+        setPos(buttonBackspace, 5, 3);
+        setButtonSize(buttonBackspace);
+        buttonBackspace.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useBackspace();
+            }
+        });
+
         // Slider Button
         Button buttonSlider = new Button();
         buttonSlider.setText("Use Slider");
@@ -295,7 +313,7 @@ public class App extends Application {
         addOperButton(rootControls, Calculator.SQRT_OP, 0, 1);      // Square Root Button
 
         // Scene
-        Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonSlider, sliderTextField, slider);
+        Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonBackspace, buttonSlider, sliderTextField, slider);
         root.getChildren().addAll(rootControls);
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
@@ -307,6 +325,9 @@ public class App extends Application {
                 switch (ke.getCode()) {
                     case ENTER:
                         useEquals();
+                        break;
+                    case BACK_SPACE:
+                        useBackspace();
                         break;
                     case NUMPAD1:
                     case DIGIT1:
