@@ -1,5 +1,7 @@
 package main;
 
+import java.util.LinkedList;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -101,48 +103,30 @@ public class App extends Application {
         entryTextField.setText(currentValueStr);
     }
 
+    private void addNumButton(LinkedList<Control> lb, String s, int x, int y) {
+        Button b = new Button();
+        b.setText(s);
+        setPos(b, x, y);
+        setButtonSize(b);
+        setNumButtonAction(b);
+        lb.add(b);
+    }
+
+    private void addOperButton(LinkedList<Control> lb, String s, int x, int y) {
+        Button b = new Button();
+        b.setText(s);
+        setPos(b, x, y);
+        setButtonSize(b);
+        setOperButtonAction(b);
+        lb.add(b);
+    }
+
     @Override
     public void start(Stage stage) {
         // Entry Text Field
         entryTextField = new TextField();
-        entryTextField.setTranslateX(0);
-        entryTextField.setTranslateY(0);
+        setPos(entryTextField, 0, 0);
         setSizeMan(entryTextField, 6, 1);
-
-        // Square Root Button
-        Button buttonSqrt = new Button();
-        buttonSqrt.setText(Calculator.SQRT_OP);
-        setPos(buttonSqrt, 0, 1);
-        setButtonSize(buttonSqrt);
-        setOperButtonAction(buttonSqrt);
-
-        // Power Button
-        Button buttonPow = new Button();
-        buttonPow.setText(Calculator.POW_OP);
-        setPos(buttonPow, 1, 1);
-        setButtonSize(buttonPow);
-        setOperButtonAction(buttonPow);
-
-        // Square Button
-        Button buttonSq = new Button();
-        buttonSq.setText(Calculator.SQ_OP);
-        setPos(buttonSq, 2, 1);
-        setButtonSize(buttonSq);
-        setOperButtonAction(buttonSq);
-
-        // Negate Button
-        Button buttonNeg = new Button();
-        buttonNeg.setText(Calculator.NEG_OP);
-        setPos(buttonNeg, 0, 5);
-        setButtonSize(buttonNeg);
-        setOperButtonAction(buttonNeg);
-
-        // Decimal Button
-        Button buttonDec = new Button();
-        buttonDec.setText(".");
-        setPos(buttonDec, 2, 5);
-        setButtonSize(buttonDec);
-        setNumButtonAction(buttonDec);
 
         // Equals Button
         Button buttonEq = new Button();
@@ -155,103 +139,28 @@ public class App extends Application {
             }
         });
 
-        // Mult Button
-        Button buttonMult = new Button();
-        buttonMult.setText(Calculator.MULT_OP);
-        setPos(buttonMult, 3, 2);
-        setButtonSize(buttonMult);
-        setOperButtonAction(buttonMult);
+        LinkedList<Control> rootControls = new LinkedList<Control>(); 
 
-        // Div Button
-        Button buttonDiv = new Button();
-        buttonDiv.setText(Calculator.DIV_OP);
-        setPos(buttonDiv, 3, 1);
-        setButtonSize(buttonDiv);
-        setOperButtonAction(buttonDiv);
+        addNumButton(rootControls, "0", 1, 5); // 0 Button
+        addNumButton(rootControls, "1", 0, 4); // 1 Button
+        addNumButton(rootControls, "2", 1, 4); // 2 Button
+        addNumButton(rootControls, "3", 2, 4); // 3 Button
+        addNumButton(rootControls, "4", 0, 3); // 4 Button
+        addNumButton(rootControls, "5", 1, 3); // 5 Button
+        addNumButton(rootControls, "6", 2, 3); // 6 Button
+        addNumButton(rootControls, "7", 0, 2); // 7 Button
+        addNumButton(rootControls, "8", 1, 2); // 8 Button
+        addNumButton(rootControls, "9", 2, 2); // 9 Button
+        addNumButton(rootControls, ".", 2, 5); // Decimal Button
 
-        // Add Button
-        Button buttonPlus = new Button();
-        buttonPlus.setText(Calculator.ADD_OP);
-        setPos(buttonPlus, 3, 4);
-        setButtonSize(buttonPlus);
-        setOperButtonAction(buttonPlus);
-
-        // Subtract Button
-        Button buttonMin = new Button();
-        buttonMin.setText(Calculator.SUB_OP);
-        setPos(buttonMin, 3, 3);
-        setButtonSize(buttonMin);
-        setOperButtonAction(buttonMin);
-        
-        // 7 Button
-        Button button7 = new Button();
-        button7.setText("7");
-        setPos(button7, 0, 2);
-        setButtonSize(button7);
-        setNumButtonAction(button7);
-
-        // 4 Button
-        Button button4 = new Button();
-        button4.setText("4");
-        setPos(button4, 0, 3);
-        setButtonSize(button4);
-        setNumButtonAction(button4);
-
-        // 1 Button
-        Button button1 = new Button();
-        button1.setText("1");
-        setPos(button1, 0, 4);
-        setButtonSize(button1);
-        setNumButtonAction(button1);
-
-        // 8 Button
-        Button button8 = new Button();
-        button8.setText("8");
-        setPos(button8, 1, 2);
-        setButtonSize(button8);
-        setNumButtonAction(button8);
-
-        // 5 Button
-        Button button5 = new Button();
-        button5.setText("5");
-        setPos(button5, 1, 3);
-        setButtonSize(button5);
-        setNumButtonAction(button5);
-
-        // 2 Button
-        Button button2 = new Button();
-        button2.setText("2");
-        setPos(button2, 1, 4);
-        setButtonSize(button2);
-        setNumButtonAction(button2);
-
-        // 9 Button
-        Button button9 = new Button();
-        button9.setText("9");
-        setPos(button9, 2, 2);
-        setButtonSize(button9);
-        setNumButtonAction(button9);
-
-        // 6 Button
-        Button button6 = new Button();
-        button6.setText("6");
-        setPos(button6, 2, 3);
-        setButtonSize(button6);
-        setNumButtonAction(button6);
-
-        // 3 Button
-        Button button3 = new Button();
-        button3.setText("3");
-        setPos(button3, 2, 4);
-        setButtonSize(button3);
-        setNumButtonAction(button3);
-
-        // 0 Button
-        Button button0 = new Button();
-        button0.setText("0");
-        setPos(button0, 1, 5);
-        setButtonSize(button0);
-        setNumButtonAction(button0);
+        addOperButton(rootControls, Calculator.ADD_OP, 3, 4);       // Add Button
+        addOperButton(rootControls, Calculator.SUB_OP, 3, 3);       // Subtract Button
+        addOperButton(rootControls, Calculator.MULT_OP, 3, 2);      // Multiply Button
+        addOperButton(rootControls, Calculator.DIV_OP, 3, 1);       // Divide Button
+        addOperButton(rootControls, Calculator.NEG_OP, 0, 5);       // Negate Button
+        addOperButton(rootControls, Calculator.SQ_OP, 2, 1);        // Square Button
+        addOperButton(rootControls, Calculator.POW_OP, 1, 1);       // Power Button
+        addOperButton(rootControls, Calculator.SQRT_OP, 0, 1);      // Square Root Button
 
         // Clear Button
         Button buttonClear = new Button();
@@ -308,7 +217,8 @@ public class App extends Application {
         });
 
         // Scene
-        Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonDec, buttonEq, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3, button0, buttonClear, buttonClearEntry, buttonSlider, sliderTextField, slider);
+        Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonSlider, sliderTextField, slider);
+        root.getChildren().addAll(rootControls);
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Key Events
