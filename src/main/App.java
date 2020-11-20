@@ -18,15 +18,122 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    /**
+     * Sets the scene width
+     */
     private final int SCENE_WIDTH = 325;
+
+    /**
+     * Sets the scene height
+     */
     private final int SCENE_HEIGHT = 450;
+
+    /**
+     * Creates a Calculator instance
+     */
     private Calculator calculator = new Calculator();
+
+    /**
+     * Creates the main text field
+     */
     private TextField entryTextField;
+
+    /**
+     * Creates the slider text field
+     */
     private TextField sliderTextField;
 
+    /**
+     * Sets if the main text field should clear on next input
+     */
     private Boolean shouldClear = false;
 
-    private void setOperButtonAction(Button b) {
+    /**
+     * Method that the equals button calls
+     */
+    private void useEquals() {
+        final float f = Float.parseFloat(entryTextField.getText());
+        calculator.equals(f);
+        updateDisplayedValue();
+    }
+
+    /**
+     * Method that any number or decimal button calls
+     */
+    private void useNumButton(String s) {
+        if (shouldClear) {
+            shouldClear = false;
+            entryTextField.setText(s);
+        } else
+            entryTextField.setText(entryTextField.getText() + s);
+    }
+
+    /**
+     * Sets the default size of a button
+     * @param c
+     */
+    private void setButtonSize(Control c) {
+        setSizeMan(c, 1, 1);
+    }
+
+    /**
+     * Manually sets the size of a button
+     * @param c
+     * @param x
+     * @param y
+     */
+    private void setSizeMan(Control c, int x, int y) {
+        c.setMinSize(x * 50, y * 50);
+        c.setPrefSize(x * 50, y * 50);
+        c.setMaxSize(x * 50, y * 50);
+    }
+
+    /**
+     * Sets the position of a button
+     * @param c
+     * @param x
+     * @param y
+     */
+    private void setPos(Control c, int x, int y) {
+        c.setTranslateX(x * 50);
+        c.setTranslateY(y * 50);
+    }
+
+    /**
+     * Updates the value shown in the entryTextField
+     */
+    private void updateDisplayedValue() {
+        String currentValueStr = Float.toString(calculator.getCurrentValue());
+        if (currentValueStr.endsWith(".0"))
+            currentValueStr = currentValueStr.substring(0, currentValueStr.length() - 2);
+        entryTextField.setText(currentValueStr);
+    }
+
+    /**
+     * Creates a number button and adds it to lb
+     * @param lb
+     * @param s
+     * @param x
+     * @param y
+     */
+    private void addNumButton(LinkedList<Control> lb, String s, int x, int y) {
+        Button b = newButton(lb, s, x, y);
+        b.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useNumButton(b.getText());
+            }
+        });
+    }
+
+    /**
+     * Creates an operator button and adds it to lb
+     * @param lb
+     * @param s
+     * @param x
+     * @param y
+     */
+    private void addOperButton(LinkedList<Control> lb, String s, int x, int y) {
+        Button b = newButton(lb, s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
                 final float f = Float.parseFloat(entryTextField.getText());
@@ -59,60 +166,14 @@ public class App extends Application {
         });
     }
 
-    private void useEquals() {
-        final float f = Float.parseFloat(entryTextField.getText());
-        calculator.equals(f);
-        updateDisplayedValue();
-    }
-
-    private void setNumButtonAction(Button b) {
-        b.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
-                useNumButton(b.getText());
-            }
-        });
-    }
-
-    private void useNumButton(String s) {
-        if (shouldClear) {
-            shouldClear = false;
-            entryTextField.setText(s);
-        } else
-            entryTextField.setText(entryTextField.getText() + s);
-    }
-
-    private void setButtonSize(Control c) {
-        setSizeMan(c, 1, 1);
-    }
-
-    private void setSizeMan(Control c, int x, int y) {
-        c.setMinSize(x * 50, y * 50);
-        c.setPrefSize(x * 50, y * 50);
-        c.setMaxSize(x * 50, y * 50);
-    }
-
-    private void setPos(Control c, int x, int y) {
-        c.setTranslateX(x * 50);
-        c.setTranslateY(y * 50);
-    }
-
-    private void updateDisplayedValue() {
-        String currentValueStr = Float.toString(calculator.getCurrentValue());
-        if (currentValueStr.endsWith(".0"))
-            currentValueStr = currentValueStr.substring(0, currentValueStr.length() - 2);
-        entryTextField.setText(currentValueStr);
-    }
-
-    private void addNumButton(LinkedList<Control> lb, String s, int x, int y) {
-        Button b = newButton(lb, s, x, y);
-        setNumButtonAction(b);
-    }
-
-    private void addOperButton(LinkedList<Control> lb, String s, int x, int y) {
-        Button b = newButton(lb, s, x, y);
-        setOperButtonAction(b);
-    }
-
+    /**
+     * Creates a generic button, adds it to lb and returns the button
+     * @param lb
+     * @param s
+     * @param x
+     * @param y
+     * @return
+     */
     private Button newButton(LinkedList<Control> lb, String s, int x, int y) {
         Button b = new Button();
         b.setText(s);
@@ -122,6 +183,9 @@ public class App extends Application {
         return b;
     }
 
+    /**
+     * Starts the application
+     */
     @Override
     public void start(Stage stage) {
         // Entry Text Field
@@ -292,6 +356,11 @@ public class App extends Application {
 
     }
 
+    /**
+     * Main method that gets called when the program is started. Launches the application.
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         // Launch App
         launch(args);
