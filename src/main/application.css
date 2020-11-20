@@ -1,5 +1,7 @@
 .root {
+    font-size: 14pt;
     -fx-font-size: 14pt;
+    font-family: "Tahoma";
     -fx-font-family: "Tahoma";
     -fx-base: rgb(149, 165, 166);
 }

@@ -55,7 +55,7 @@ public class Calculator {
     }
 
     /**
-     * 
+     * Applies the selected operator when the equals is selected
      */
     public void equals(float f) {
         switch (currentOperator) {
