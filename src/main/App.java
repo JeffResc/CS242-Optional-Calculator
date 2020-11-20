@@ -183,12 +183,22 @@ public class App extends Application {
     }
 
     /**
+     * Do not allow Control to be selected
+     */
+    private void doNotSelect(Control c, Group r) {
+        entryTextField.focusedProperty().addListener((ob,  ov,  nv) -> {
+            r.requestFocus(); // Delegate the focus to root
+        });
+    }
+
+    /**
      * Starts the application
      */
     @Override
     public void start(Stage stage) {
         // Entry Text Field
         entryTextField = new TextField();
+        entryTextField.setEditable(false);
         setPos(entryTextField, 0, 0);
         setSizeMan(entryTextField, 6, 1);
 
@@ -242,6 +252,7 @@ public class App extends Application {
 
         // Slider Text Field
         sliderTextField = new TextField();
+        sliderTextField.setEditable(false);
         setPos(sliderTextField, 0, 7);
         setSizeMan(sliderTextField, 4, 1);
 
@@ -353,6 +364,9 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
+        // Do not select entryTextField or sliderTextField, delegrate it to root
+        doNotSelect(entryTextField, root);
+        doNotSelect(sliderTextField, root);
     }
 
     /**
