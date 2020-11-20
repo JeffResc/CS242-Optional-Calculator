@@ -139,29 +139,6 @@ public class App extends Application {
             }
         });
 
-        LinkedList<Control> rootControls = new LinkedList<Control>(); 
-
-        addNumButton(rootControls, "0", 1, 5); // 0 Button
-        addNumButton(rootControls, "1", 0, 4); // 1 Button
-        addNumButton(rootControls, "2", 1, 4); // 2 Button
-        addNumButton(rootControls, "3", 2, 4); // 3 Button
-        addNumButton(rootControls, "4", 0, 3); // 4 Button
-        addNumButton(rootControls, "5", 1, 3); // 5 Button
-        addNumButton(rootControls, "6", 2, 3); // 6 Button
-        addNumButton(rootControls, "7", 0, 2); // 7 Button
-        addNumButton(rootControls, "8", 1, 2); // 8 Button
-        addNumButton(rootControls, "9", 2, 2); // 9 Button
-        addNumButton(rootControls, ".", 2, 5); // Decimal Button
-
-        addOperButton(rootControls, Calculator.ADD_OP, 3, 4);       // Add Button
-        addOperButton(rootControls, Calculator.SUB_OP, 3, 3);       // Subtract Button
-        addOperButton(rootControls, Calculator.MULT_OP, 3, 2);      // Multiply Button
-        addOperButton(rootControls, Calculator.DIV_OP, 3, 1);       // Divide Button
-        addOperButton(rootControls, Calculator.NEG_OP, 0, 5);       // Negate Button
-        addOperButton(rootControls, Calculator.SQ_OP, 2, 1);        // Square Button
-        addOperButton(rootControls, Calculator.POW_OP, 1, 1);       // Power Button
-        addOperButton(rootControls, Calculator.SQRT_OP, 0, 1);      // Square Root Button
-
         // Clear Button
         Button buttonClear = new Button();
         buttonClear.setText("C");
@@ -215,6 +192,32 @@ public class App extends Application {
                 sliderTextField.textProperty().setValue( Integer.toString((int)Math.round((Double) newValue)));
             }
         });
+
+        // Create list to store number and operator buttons
+        LinkedList<Control> rootControls = new LinkedList<Control>(); 
+
+        // Create all number buttons
+        addNumButton(rootControls, "0", 1, 5); // 0 Button
+        addNumButton(rootControls, "1", 0, 4); // 1 Button
+        addNumButton(rootControls, "2", 1, 4); // 2 Button
+        addNumButton(rootControls, "3", 2, 4); // 3 Button
+        addNumButton(rootControls, "4", 0, 3); // 4 Button
+        addNumButton(rootControls, "5", 1, 3); // 5 Button
+        addNumButton(rootControls, "6", 2, 3); // 6 Button
+        addNumButton(rootControls, "7", 0, 2); // 7 Button
+        addNumButton(rootControls, "8", 1, 2); // 8 Button
+        addNumButton(rootControls, "9", 2, 2); // 9 Button
+        addNumButton(rootControls, ".", 2, 5); // Decimal Button
+
+        // Create all operator buttons
+        addOperButton(rootControls, Calculator.ADD_OP, 3, 4);       // Add Button
+        addOperButton(rootControls, Calculator.SUB_OP, 3, 3);       // Subtract Button
+        addOperButton(rootControls, Calculator.MULT_OP, 3, 2);      // Multiply Button
+        addOperButton(rootControls, Calculator.DIV_OP, 3, 1);       // Divide Button
+        addOperButton(rootControls, Calculator.NEG_OP, 0, 5);       // Negate Button
+        addOperButton(rootControls, Calculator.SQ_OP, 2, 1);        // Square Button
+        addOperButton(rootControls, Calculator.POW_OP, 1, 1);       // Power Button
+        addOperButton(rootControls, Calculator.SQRT_OP, 0, 1);      // Square Root Button
 
         // Scene
         Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonSlider, sliderTextField, slider);
