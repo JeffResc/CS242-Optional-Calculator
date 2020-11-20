@@ -104,21 +104,22 @@ public class App extends Application {
     }
 
     private void addNumButton(LinkedList<Control> lb, String s, int x, int y) {
-        Button b = new Button();
-        b.setText(s);
-        setPos(b, x, y);
-        setButtonSize(b);
+        Button b = newButton(lb, s, x, y);
         setNumButtonAction(b);
-        lb.add(b);
     }
 
     private void addOperButton(LinkedList<Control> lb, String s, int x, int y) {
+        Button b = newButton(lb, s, x, y);
+        setOperButtonAction(b);
+    }
+
+    private Button newButton(LinkedList<Control> lb, String s, int x, int y) {
         Button b = new Button();
         b.setText(s);
         setPos(b, x, y);
         setButtonSize(b);
-        setOperButtonAction(b);
         lb.add(b);
+        return b;
     }
 
     @Override
