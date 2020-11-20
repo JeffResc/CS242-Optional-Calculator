@@ -1,11 +1,14 @@
 package main;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,6 +19,7 @@ public class App extends Application {
     private final int SCENE_HEIGHT = 250;
     private Calculator calculator = new Calculator();
     private TextField entryTextField;
+    private TextField sliderTextField;
 
     private Boolean shouldClear = false;
 
@@ -340,8 +344,41 @@ public class App extends Application {
             }
         });
 
+        // slider Button
+        Button buttonSlider = new Button();
+        buttonSlider.setText("Use Slider");
+        buttonSlider.setTranslateX(0);
+        buttonSlider.setTranslateY(185);
+
+        buttonSlider.setOnAction( new EventHandler<ActionEvent>() {
+            public void handle( ActionEvent ae ) {
+                useButton(sliderTextField.getText());
+                sliderTextField.clear();
+            }
+        });
+
+        // slider Text Field
+        sliderTextField = new TextField();
+        sliderTextField.setTranslateX(0);
+        sliderTextField.setTranslateY(160);
+
+        //slider
+        Slider slider = new Slider();
+        slider.setMaxWidth( 350 );
+        slider.setTranslateX(0);
+        slider.setTranslateY(130);
+        slider.setStyle("-fx-font-size: 30; -fx-text-fill: #EEEEEE;");
+
+        slider.valueProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed( ObservableValue<? extends Number> observableValue,
+                                 Number oldValue, Number newValue ) {
+                sliderTextField.textProperty().setValue( Integer.toString((int)Math.round((Double) newValue)));
+            }
+        });
+
         // Scene
-        Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonDec, buttonEq, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3, button0, buttonClear, buttonClearEntry);
+        Group root = new Group(entryTextField, buttonSqrt, buttonPow, buttonSq, buttonNeg, buttonDec, buttonEq, buttonMult, buttonDiv, buttonPlus, buttonMin, button7, button4, button1, button8, button5, button2, button9, button6, button3, button0, buttonClear, buttonClearEntry, buttonSlider, sliderTextField, slider);
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Key Events
