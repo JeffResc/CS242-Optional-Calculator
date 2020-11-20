@@ -11,13 +11,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import main.Calculator;
+import main.Compute;
 
 public class App extends Application {
     private final int SCENE_WIDTH = 500;
     private final int SCENE_HEIGHT = 250;
-    
-    private Calculator calculator = new Calculator();
+    private Compute compute = new Compute();
     private TextField entryTextField;
 
     @Override
