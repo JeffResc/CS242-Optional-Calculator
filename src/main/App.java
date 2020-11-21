@@ -121,7 +121,7 @@ public class App extends Application {
      * @param x
      * @param y
      */
-    private Button addNumButton(String s, int x, int y) {
+    private Button createNumButton(String s, int x, int y) {
         Button b = newButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
@@ -288,17 +288,17 @@ public class App extends Application {
         LinkedList<Control> rootControls = new LinkedList<Control>(); 
 
         // Create all number buttons
-        rootControls.add(addNumButton("0", 1, 5)); // 0 Button
-        rootControls.add(addNumButton("1", 0, 4)); // 1 Button
-        rootControls.add(addNumButton("2", 1, 4)); // 2 Button
-        rootControls.add(addNumButton("3", 2, 4)); // 3 Button
-        rootControls.add(addNumButton("4", 0, 3)); // 4 Button
-        rootControls.add(addNumButton("5", 1, 3)); // 5 Button
-        rootControls.add(addNumButton("6", 2, 3)); // 6 Button
-        rootControls.add(addNumButton("7", 0, 2)); // 7 Button
-        rootControls.add(addNumButton("8", 1, 2)); // 8 Button
-        rootControls.add(addNumButton("9", 2, 2)); // 9 Button
-        rootControls.add(addNumButton(".", 2, 5)); // Decimal Button
+        rootControls.add(createNumButton("0", 1, 5)); // 0 Button
+        rootControls.add(createNumButton("1", 0, 4)); // 1 Button
+        rootControls.add(createNumButton("2", 1, 4)); // 2 Button
+        rootControls.add(createNumButton("3", 2, 4)); // 3 Button
+        rootControls.add(createNumButton("4", 0, 3)); // 4 Button
+        rootControls.add(createNumButton("5", 1, 3)); // 5 Button
+        rootControls.add(createNumButton("6", 2, 3)); // 6 Button
+        rootControls.add(createNumButton("7", 0, 2)); // 7 Button
+        rootControls.add(createNumButton("8", 1, 2)); // 8 Button
+        rootControls.add(createNumButton("9", 2, 2)); // 9 Button
+        rootControls.add(createNumButton(".", 2, 5)); // Decimal Button
 
         // Create all operator buttons
         rootControls.add(addOperButton(Calculator.ADD_OP, 3, 4));       // Add Button
