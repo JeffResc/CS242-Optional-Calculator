@@ -28,6 +28,15 @@ public class Calculator {
     }
 
     /**
+     * Returns a list of all operators
+     * @return
+     */
+    public final static String[] getOperators() {
+        final String[] opers = { ADD_OP, SUB_OP, MULT_OP, DIV_OP, NEG_OP, SQ_OP, SQRT_OP, POW_OP };
+        return opers;
+    }
+
+    /**
      * Gets the calculator's current value
      * 
      * @return

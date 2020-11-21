@@ -147,6 +147,14 @@ public class App extends Application {
         Button b = createButton(s, x, y);
         b.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
+                final String[] opers = Calculator.getOperators();
+                for(String oper : opers) {
+                    if (entryTextField.getText().endsWith(oper)) {
+                        for (int i = 0; i < oper.length(); i++)
+                            useBackspace();
+                        break;
+                    }
+                }
                 final float f = Float.parseFloat(entryTextField.getText());
                 final String operator = b.getText();
                 switch (operator) {
