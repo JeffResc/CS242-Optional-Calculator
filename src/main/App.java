@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -397,6 +398,8 @@ public class App extends Application {
         // Stage
         stage.setTitle("Calculator");
         stage.setScene(scene);
+        stage.getIcons().add(new Image("file:calc.png"));
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("calc.png")));
         stage.show();
 
         // Do not select entryTextField or sliderTextField, delegrate it to root
