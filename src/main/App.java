@@ -122,7 +122,7 @@ public class App extends Application {
      * @param y
      */
     private Button createNumButton(String s, int x, int y) {
-        Button b = newButton(s, x, y);
+        Button b = createButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
                 useNumButton(b.getText());
@@ -138,7 +138,7 @@ public class App extends Application {
      * @param y
      */
     private Button createOperButton(String s, int x, int y) {
-        Button b = newButton(s, x, y);
+        Button b = createButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
                 final float f = Float.parseFloat(entryTextField.getText());
@@ -179,7 +179,7 @@ public class App extends Application {
      * @param y
      * @return
      */
-    private Button newButton(String s, int x, int y) {
+    private Button createButton(String s, int x, int y) {
         Button b = new Button();
         b.setText(s);
         setPos(b, x, y);
