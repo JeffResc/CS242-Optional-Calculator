@@ -7,6 +7,9 @@ My approach to creating the GUI was to go with a similar layout to [Windows Calc
 
 As for how the issue of getting multiple digits is solved, all buttons just map their value directly to `entryTextField` so having multiple numbers in a String isn't a problem. From there, once an operator or equals button is pressed, the text in `entryTextField` is gathered using `entryTextField.getText()` and is parsed into a Float using `Float.parseFloat(entryTextField.getText())`. If this is the first time the user is using the calculator (i.e. it was previously cleared), when the user presses a binary operator, it just stores that operator in the `currentOperator` variable and the number in `currentValue`. From there, once the equals button is pressed, it will re-read the value of `entryTextField` to get the second number, recall the first number from `currentValue` and then apply the operator using `currentOperator`. After the calculation, `currentValue` is overridden to the new current value and the GUI is updated using the `updateDisplayedValue()` method.
 
+# JAR File
+The exported JAR file is available in the [releases tab](https://github.com/JeffResc/CS242-Optional-Calculator/releases).
+
 # Screenshot
 ![Capture.PNG](https://github.com/JeffResc/CS242-Optional-Calculator/blob/main/assets/Capture.PNG)
 
