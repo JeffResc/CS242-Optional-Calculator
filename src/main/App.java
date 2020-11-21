@@ -137,7 +137,7 @@ public class App extends Application {
      * @param x
      * @param y
      */
-    private Button addOperButton(String s, int x, int y) {
+    private Button createOperButton(String s, int x, int y) {
         Button b = newButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
@@ -301,14 +301,14 @@ public class App extends Application {
         rootControls.add(createNumButton(".", 2, 5)); // Decimal Button
 
         // Create all operator buttons
-        rootControls.add(addOperButton(Calculator.ADD_OP, 3, 4));       // Add Button
-        rootControls.add(addOperButton(Calculator.SUB_OP, 3, 3));       // Subtract Button
-        rootControls.add(addOperButton(Calculator.MULT_OP, 3, 2));      // Multiply Button
-        rootControls.add(addOperButton(Calculator.DIV_OP, 3, 1));       // Divide Button
-        rootControls.add(addOperButton(Calculator.NEG_OP, 0, 5));       // Negate Button
-        rootControls.add(addOperButton(Calculator.SQ_OP, 2, 1));        // Square Button
-        rootControls.add(addOperButton(Calculator.POW_OP, 1, 1));       // Power Button
-        rootControls.add(addOperButton(Calculator.SQRT_OP, 0, 1));      // Square Root Button
+        rootControls.add(createOperButton(Calculator.ADD_OP, 3, 4));       // Add Button
+        rootControls.add(createOperButton(Calculator.SUB_OP, 3, 3));       // Subtract Button
+        rootControls.add(createOperButton(Calculator.MULT_OP, 3, 2));      // Multiply Button
+        rootControls.add(createOperButton(Calculator.DIV_OP, 3, 1));       // Divide Button
+        rootControls.add(createOperButton(Calculator.NEG_OP, 0, 5));       // Negate Button
+        rootControls.add(createOperButton(Calculator.SQ_OP, 2, 1));        // Square Button
+        rootControls.add(createOperButton(Calculator.POW_OP, 1, 1));       // Power Button
+        rootControls.add(createOperButton(Calculator.SQRT_OP, 0, 1));      // Square Root Button
 
         // Scene
         Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonBackspace, buttonSlider, sliderTextField, slider);
