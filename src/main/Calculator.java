@@ -29,6 +29,7 @@ public class Calculator {
 
     /**
      * Gets the calculator's current value
+     * 
      * @return
      */
     public float getCurrentValue() {
@@ -109,9 +110,9 @@ public class Calculator {
      * Raises currentValue to a power given by float
      */
     public void powValue(float f) {
-        currentValue = (float)Math.pow(currentValue, f);
+        currentValue = (float) Math.pow(currentValue, f);
     }
-    
+
     /**
      * Negates currentValue
      */
@@ -131,6 +132,6 @@ public class Calculator {
      * Square roots currentValue
      */
     public void sqrtValue(float f) {
-        currentValue = (float)Math.sqrt(f);
+        currentValue = (float) Math.sqrt(f);
     }
 }

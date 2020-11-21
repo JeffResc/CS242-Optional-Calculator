@@ -60,7 +60,7 @@ public class App extends Application {
      * Method that the backspace button calls
      */
     private void useBackspace() {
-        entryTextField.setText(entryTextField.getText().substring(0, entryTextField.getText().length()-1));
+        entryTextField.setText(entryTextField.getText().substring(0, entryTextField.getText().length() - 1));
     }
 
     /**
@@ -76,6 +76,7 @@ public class App extends Application {
 
     /**
      * Sets the default size of a button
+     * 
      * @param c
      */
     private void setButtonSize(Control c) {
@@ -84,6 +85,7 @@ public class App extends Application {
 
     /**
      * Manually sets the size of a button
+     * 
      * @param c
      * @param x
      * @param y
@@ -96,6 +98,7 @@ public class App extends Application {
 
     /**
      * Sets the position of a button
+     * 
      * @param c
      * @param x
      * @param y
@@ -117,14 +120,15 @@ public class App extends Application {
 
     /**
      * Creates a number button and returns it
+     * 
      * @param s
      * @param x
      * @param y
      */
     private Button createNumButton(String s, int x, int y) {
         Button b = createButton(s, x, y);
-        b.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 useNumButton(b.getText());
             }
         });
@@ -133,14 +137,15 @@ public class App extends Application {
 
     /**
      * Creates an operator button and returns it
+     * 
      * @param s
      * @param x
      * @param y
      */
     private Button createOperButton(String s, int x, int y) {
         Button b = createButton(s, x, y);
-        b.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 final float f = Float.parseFloat(entryTextField.getText());
                 final String operator = b.getText();
                 switch (operator) {
@@ -151,7 +156,7 @@ public class App extends Application {
                     case Calculator.POW_OP:
                         calculator.setCurrentOperator(operator);
                         calculator.setCurrentValue(f);
-                        entryTextField.setText(entryTextField.getText()+operator);
+                        entryTextField.setText(entryTextField.getText() + operator);
                         shouldClear = true;
                         break;
                     case Calculator.SQRT_OP:
@@ -174,6 +179,7 @@ public class App extends Application {
 
     /**
      * Creates a generic button and returns the it
+     * 
      * @param s
      * @param x
      * @param y
@@ -191,7 +197,7 @@ public class App extends Application {
      * Do not allow Control to be selected
      */
     private void doNotSelect(Control c, Group r) {
-        entryTextField.focusedProperty().addListener((ob,  ov,  nv) -> {
+        entryTextField.focusedProperty().addListener((ob, ov, nv) -> {
             r.requestFocus(); // Delegate the focus to root
         });
     }
@@ -212,8 +218,8 @@ public class App extends Application {
         buttonEq.setText("=");
         setPos(buttonEq, 3, 5);
         setButtonSize(buttonEq);
-        buttonEq.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        buttonEq.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 useEquals();
             }
         });
@@ -223,8 +229,8 @@ public class App extends Application {
         buttonClear.setText("C");
         setPos(buttonClear, 5, 1);
         setButtonSize(buttonClear);
-        buttonClear.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        buttonClear.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 entryTextField.clear();
                 sliderTextField.clear();
                 calculator.clearValue();
@@ -236,8 +242,8 @@ public class App extends Application {
         buttonClearEntry.setText("CE");
         setPos(buttonClearEntry, 5, 2);
         setButtonSize(buttonClearEntry);
-        buttonClearEntry.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        buttonClearEntry.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 entryTextField.clear();
             }
         });
@@ -247,8 +253,8 @@ public class App extends Application {
         buttonBackspace.setText("⇦");
         setPos(buttonBackspace, 5, 3);
         setButtonSize(buttonBackspace);
-        buttonBackspace.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        buttonBackspace.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 useBackspace();
             }
         });
@@ -259,8 +265,8 @@ public class App extends Application {
         setPos(buttonSlider, 0, 8);
         setSizeMan(buttonSlider, 4, 1);
 
-        buttonSlider.setOnAction( new EventHandler<ActionEvent>() {
-            public void handle( ActionEvent ae ) {
+        buttonSlider.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
                 useNumButton(sliderTextField.getText());
                 sliderTextField.clear();
             }
@@ -277,15 +283,15 @@ public class App extends Application {
         setSizeMan(slider, 4, 1);
         setPos(slider, 0, 6);
         slider.setStyle("-fx-font-size: 30; -fx-text-fill: #EEEEEE;");
-        slider.valueProperty().addListener( new ChangeListener<Number>() {
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed( ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue ) {
-                sliderTextField.textProperty().setValue( Integer.toString((int)Math.round((Double) newValue)));
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                sliderTextField.textProperty().setValue(Integer.toString((int) Math.round((Double) newValue)));
             }
         });
 
         // Create list to store number and operator buttons
-        LinkedList<Control> rootControls = new LinkedList<Control>(); 
+        LinkedList<Control> rootControls = new LinkedList<Control>();
 
         // Create all number buttons
         rootControls.add(createNumButton("0", 1, 5)); // 0 Button
@@ -301,25 +307,26 @@ public class App extends Application {
         rootControls.add(createNumButton(".", 2, 5)); // Decimal Button
 
         // Create all operator buttons
-        rootControls.add(createOperButton(Calculator.ADD_OP, 3, 4));       // Add Button
-        rootControls.add(createOperButton(Calculator.SUB_OP, 3, 3));       // Subtract Button
-        rootControls.add(createOperButton(Calculator.MULT_OP, 3, 2));      // Multiply Button
-        rootControls.add(createOperButton(Calculator.DIV_OP, 3, 1));       // Divide Button
-        rootControls.add(createOperButton(Calculator.NEG_OP, 0, 5));       // Negate Button
-        rootControls.add(createOperButton(Calculator.SQ_OP, 2, 1));        // Square Button
-        rootControls.add(createOperButton(Calculator.POW_OP, 1, 1));       // Power Button
-        rootControls.add(createOperButton(Calculator.SQRT_OP, 0, 1));      // Square Root Button
+        rootControls.add(createOperButton(Calculator.ADD_OP, 3, 4)); // Add Button
+        rootControls.add(createOperButton(Calculator.SUB_OP, 3, 3)); // Subtract Button
+        rootControls.add(createOperButton(Calculator.MULT_OP, 3, 2)); // Multiply Button
+        rootControls.add(createOperButton(Calculator.DIV_OP, 3, 1)); // Divide Button
+        rootControls.add(createOperButton(Calculator.NEG_OP, 0, 5)); // Negate Button
+        rootControls.add(createOperButton(Calculator.SQ_OP, 2, 1)); // Square Button
+        rootControls.add(createOperButton(Calculator.POW_OP, 1, 1)); // Power Button
+        rootControls.add(createOperButton(Calculator.SQRT_OP, 0, 1)); // Square Root Button
 
         // Scene
-        Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonBackspace, buttonSlider, sliderTextField, slider);
+        Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonBackspace, buttonSlider,
+                sliderTextField, slider);
         root.getChildren().addAll(rootControls);
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Key Events
-        root.setOnKeyPressed( new EventHandler<KeyEvent>() {
+        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
             // change color of second button to red if r is pressed,
             // green if g is pressed, and blue if b is pressed
-            public void handle( KeyEvent ke ) {
+            public void handle(KeyEvent ke) {
                 switch (ke.getCode()) {
                     case ENTER:
                         useEquals();
@@ -375,7 +382,7 @@ public class App extends Application {
 
         // Set CSS
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        scene.setFill(Color.rgb(33,33,33));
+        scene.setFill(Color.rgb(33, 33, 33));
         root.getStyleClass().add("root");
 
         // Stage
@@ -389,7 +396,9 @@ public class App extends Application {
     }
 
     /**
-     * Main method that gets called when the program is started. Launches the application.
+     * Main method that gets called when the program is started. Launches the
+     * application.
+     * 
      * @param args
      * @throws Exception
      */
