@@ -13,6 +13,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -49,6 +50,15 @@ public class App extends Application {
     private Boolean shouldClear = false;
 
     /**
+     * Clears the GUI interface.
+     */
+    private void clear() {
+        entryTextField.clear();
+        sliderTextField.clear();
+        calculator.clearValue();
+    }
+
+    /**
      * Method that the equals button calls
      */
     private void useEquals() {
@@ -74,6 +84,45 @@ public class App extends Application {
             entryTextField.setText(s);
         } else
             entryTextField.setText(entryTextField.getText() + s);
+    }
+
+    /**
+     * Method that any operator button calls
+     */
+    private void useOperButton(String operator) {
+        final String[] opers = Calculator.getOperators();
+        for(String oper : opers) {
+            if (entryTextField.getText().endsWith(oper)) {
+                for (int i = 0; i < oper.length(); i++)
+                    useBackspace();
+                break;
+            }
+        }
+        final float f = Float.parseFloat(entryTextField.getText());
+        switch (operator) {
+            case Calculator.ADD_OP:
+            case Calculator.SUB_OP:
+            case Calculator.MULT_OP:
+            case Calculator.DIV_OP:
+            case Calculator.POW_OP:
+                calculator.setCurrentOperator(operator);
+                calculator.setCurrentValue(f);
+                entryTextField.setText(entryTextField.getText() + operator);
+                shouldClear = true;
+                break;
+            case Calculator.SQRT_OP:
+                calculator.sqrtValue(f);
+                updateDisplayedValue();
+                break;
+            case Calculator.NEG_OP:
+                calculator.negValue(f);
+                updateDisplayedValue();
+                break;
+            case Calculator.SQ_OP:
+                calculator.sqValue(f);
+                updateDisplayedValue();
+                break;
+        }
     }
 
     /**
@@ -148,40 +197,7 @@ public class App extends Application {
         Button b = createButton(s, x, y);
         b.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
-                final String[] opers = Calculator.getOperators();
-                for(String oper : opers) {
-                    if (entryTextField.getText().endsWith(oper)) {
-                        for (int i = 0; i < oper.length(); i++)
-                            useBackspace();
-                        break;
-                    }
-                }
-                final float f = Float.parseFloat(entryTextField.getText());
-                final String operator = b.getText();
-                switch (operator) {
-                    case Calculator.ADD_OP:
-                    case Calculator.SUB_OP:
-                    case Calculator.MULT_OP:
-                    case Calculator.DIV_OP:
-                    case Calculator.POW_OP:
-                        calculator.setCurrentOperator(operator);
-                        calculator.setCurrentValue(f);
-                        entryTextField.setText(entryTextField.getText() + operator);
-                        shouldClear = true;
-                        break;
-                    case Calculator.SQRT_OP:
-                        calculator.sqrtValue(f);
-                        updateDisplayedValue();
-                        break;
-                    case Calculator.NEG_OP:
-                        calculator.negValue(f);
-                        updateDisplayedValue();
-                        break;
-                    case Calculator.SQ_OP:
-                        calculator.sqValue(f);
-                        updateDisplayedValue();
-                        break;
-                }
+                useOperButton(b.getText());
             }
         });
         return b;
@@ -241,9 +257,7 @@ public class App extends Application {
         setButtonSize(buttonClear);
         buttonClear.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
-                entryTextField.clear();
-                sliderTextField.clear();
-                calculator.clearValue();
+                clear();
             }
         });
 
@@ -337,55 +351,77 @@ public class App extends Application {
             // change color of second button to red if r is pressed,
             // green if g is pressed, and blue if b is pressed
             public void handle(KeyEvent ke) {
-                switch (ke.getCode()) {
-                    case ENTER:
-                        useEquals();
-                        break;
-                    case BACK_SPACE:
-                        useBackspace();
-                        break;
-                    case NUMPAD1:
-                    case DIGIT1:
-                        useNumButton("1");
-                        break;
-                    case NUMPAD2:
-                    case DIGIT2:
-                        useNumButton("2");
-                        break;
-                    case NUMPAD3:
-                    case DIGIT3:
-                        useNumButton("3");
-                        break;
-                    case NUMPAD4:
-                    case DIGIT4:
-                        useNumButton("4");
-                        break;
-                    case NUMPAD5:
-                    case DIGIT5:
-                        useNumButton("5");
-                        break;
-                    case NUMPAD6:
-                    case DIGIT6:
-                        useNumButton("6");
-                        break;
-                    case NUMPAD7:
-                    case DIGIT7:
-                        useNumButton("7");
-                        break;
-                    case NUMPAD8:
-                    case DIGIT8:
-                        useNumButton("8");
-                        break;
-                    case NUMPAD9:
-                    case DIGIT9:
-                        useNumButton("9");
-                        break;
-                    case NUMPAD0:
-                    case DIGIT0:
-                        useNumButton("0");
-                        break;
-                    default:
-                        break;
+                if ((ke.getCode() == KeyCode.DIGIT6 && ke.isShiftDown()) || ke.getCode() == KeyCode.CIRCUMFLEX) {
+                    useOperButton(Calculator.POW_OP);
+                } else if ((ke.getCode() == KeyCode.EQUALS && ke.isShiftDown()) || ke.getCode() == KeyCode.PLUS || ke.getCode() == KeyCode.ADD) {
+                    useOperButton(Calculator.ADD_OP);
+                } else {
+                    switch (ke.getCode()) {
+                        case DELETE:
+                            clear();
+                            break;
+                        case ENTER:
+                        case EQUALS:
+                            useEquals();
+                            break;
+                        case BACK_SPACE:
+                            useBackspace();
+                            break;
+                        case SUBTRACT:
+                        case MINUS:
+                            useOperButton(Calculator.SUB_OP);
+                            break;
+                        case ASTERISK:
+                        case MULTIPLY:
+                            useOperButton(Calculator.MULT_OP);
+                            break;
+                        case SLASH:
+                        case DIVIDE:
+                            useOperButton(Calculator.DIV_OP);
+                            break;
+                        case NUMPAD1:
+                        case DIGIT1:
+                            useNumButton("1");
+                            break;
+                        case NUMPAD2:
+                        case DIGIT2:
+                            useNumButton("2");
+                            break;
+                        case NUMPAD3:
+                        case DIGIT3:
+                            useNumButton("3");
+                            break;
+                        case NUMPAD4:
+                        case DIGIT4:
+                            useNumButton("4");
+                            break;
+                        case NUMPAD5:
+                        case DIGIT5:
+                            useNumButton("5");
+                            break;
+                        case NUMPAD6:
+                        case DIGIT6:
+                            useNumButton("6");
+                            break;
+                        case NUMPAD7:
+                        case DIGIT7:
+                            useNumButton("7");
+                            break;
+                        case NUMPAD8:
+                        case DIGIT8:
+                            useNumButton("8");
+                            break;
+                        case NUMPAD9:
+                        case DIGIT9:
+                            useNumButton("9");
+                            break;
+                        case NUMPAD0:
+                        case DIGIT0:
+                            useNumButton("0");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         });
