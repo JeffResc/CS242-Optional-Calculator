@@ -60,7 +60,8 @@ public class App extends Application {
      * Method that the backspace button calls
      */
     private void useBackspace() {
-        entryTextField.setText(entryTextField.getText().substring(0, entryTextField.getText().length() - 1));
+        if (entryTextField.getText().length() > 0)
+            entryTextField.setText(entryTextField.getText().substring(0, entryTextField.getText().length() - 1));
     }
 
     /**
