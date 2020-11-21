@@ -22,7 +22,7 @@ public class App extends Application {
     /**
      * Sets the scene width
      */
-    private final int SCENE_WIDTH = 325;
+    private final int SCENE_WIDTH = 300;
 
     /**
      * Sets the scene height
