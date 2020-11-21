@@ -93,7 +93,7 @@ public class App extends Application {
      */
     private void useOperButton(String operator) {
         final String[] opers = Calculator.getOperators();
-        for(String oper : opers) {
+        for (String oper : opers) {
             if (entryTextField.getText().endsWith(oper)) {
                 for (int i = 0; i < oper.length(); i++)
                     useBackspace();
@@ -270,7 +270,19 @@ public class App extends Application {
         setButtonSize(buttonClearEntry);
         buttonClearEntry.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent ae) {
-                entryTextField.clear();
+                final String[] opers = Calculator.getOperators();
+                Boolean hadOper = false;
+                for (String oper : opers) {
+                    if (entryTextField.getText().endsWith(oper)) {
+                        for (int i = 0; i < oper.length(); i++) {
+                            hadOper = true;
+                            useBackspace();
+                        }
+                        break;
+                    }
+                }
+                if (!hadOper)
+                    entryTextField.clear();
             }
         });
 
@@ -355,7 +367,8 @@ public class App extends Application {
             public void handle(KeyEvent ke) {
                 if ((ke.getCode() == KeyCode.DIGIT6 && ke.isShiftDown()) || ke.getCode() == KeyCode.CIRCUMFLEX) {
                     useOperButton(Calculator.POW_OP);
-                } else if ((ke.getCode() == KeyCode.EQUALS && ke.isShiftDown()) || ke.getCode() == KeyCode.PLUS || ke.getCode() == KeyCode.ADD) {
+                } else if ((ke.getCode() == KeyCode.EQUALS && ke.isShiftDown()) || ke.getCode() == KeyCode.PLUS
+                        || ke.getCode() == KeyCode.ADD) {
                     useOperButton(Calculator.ADD_OP);
                 } else {
                     switch (ke.getCode()) {
