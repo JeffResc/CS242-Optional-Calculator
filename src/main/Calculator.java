@@ -29,6 +29,7 @@ public class Calculator {
 
     /**
      * Returns a list of all operators
+     * 
      * @return
      */
     public final static String[] getOperators() {
