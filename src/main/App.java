@@ -62,9 +62,11 @@ public class App extends Application {
      * Method that the equals button calls
      */
     private void useEquals() {
-        final float f = Float.parseFloat(entryTextField.getText());
-        calculator.equals(f);
-        updateDisplayedValue();
+        if (calculator.getCurrentOperator() != null) {
+            final float f = Float.parseFloat(entryTextField.getText());
+            calculator.equals(f);
+            updateDisplayedValue();
+        }
     }
 
     /**

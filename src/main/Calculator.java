@@ -18,7 +18,7 @@ public class Calculator {
     /**
      * Stores the current operator
      */
-    private String currentOperator;
+    private String currentOperator = null;
 
     /**
      * Default constructor
@@ -45,6 +45,18 @@ public class Calculator {
         return currentValue;
     }
 
+    /**
+     * Gets the calculator's current operator
+     * 
+     * @return
+     */
+    public String getCurrentOperator() {
+        return currentOperator;
+    }
+
+    /**
+     * Sets the current operator
+     */
     public void setCurrentOperator(String op) {
         currentOperator = op;
     }
