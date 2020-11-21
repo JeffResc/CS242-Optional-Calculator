@@ -116,30 +116,29 @@ public class App extends Application {
     }
 
     /**
-     * Creates a number button and adds it to lb
-     * @param lb
+     * Creates a number button and returns it
      * @param s
      * @param x
      * @param y
      */
-    private void addNumButton(LinkedList<Control> lb, String s, int x, int y) {
-        Button b = newButton(lb, s, x, y);
+    private Button addNumButton(String s, int x, int y) {
+        Button b = newButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
                 useNumButton(b.getText());
             }
         });
+        return b;
     }
 
     /**
-     * Creates an operator button and adds it to lb
-     * @param lb
+     * Creates an operator button and returns it
      * @param s
      * @param x
      * @param y
      */
-    private void addOperButton(LinkedList<Control> lb, String s, int x, int y) {
-        Button b = newButton(lb, s, x, y);
+    private Button addOperButton(String s, int x, int y) {
+        Button b = newButton(s, x, y);
         b.setOnAction( new EventHandler<ActionEvent>() {
             public void handle( ActionEvent ae ) {
                 final float f = Float.parseFloat(entryTextField.getText());
@@ -170,22 +169,21 @@ public class App extends Application {
                 }
             }
         });
+        return b;
     }
 
     /**
-     * Creates a generic button, adds it to lb and returns the button
-     * @param lb
+     * Creates a generic button and returns the it
      * @param s
      * @param x
      * @param y
      * @return
      */
-    private Button newButton(LinkedList<Control> lb, String s, int x, int y) {
+    private Button newButton(String s, int x, int y) {
         Button b = new Button();
         b.setText(s);
         setPos(b, x, y);
         setButtonSize(b);
-        lb.add(b);
         return b;
     }
 
@@ -290,27 +288,27 @@ public class App extends Application {
         LinkedList<Control> rootControls = new LinkedList<Control>(); 
 
         // Create all number buttons
-        addNumButton(rootControls, "0", 1, 5); // 0 Button
-        addNumButton(rootControls, "1", 0, 4); // 1 Button
-        addNumButton(rootControls, "2", 1, 4); // 2 Button
-        addNumButton(rootControls, "3", 2, 4); // 3 Button
-        addNumButton(rootControls, "4", 0, 3); // 4 Button
-        addNumButton(rootControls, "5", 1, 3); // 5 Button
-        addNumButton(rootControls, "6", 2, 3); // 6 Button
-        addNumButton(rootControls, "7", 0, 2); // 7 Button
-        addNumButton(rootControls, "8", 1, 2); // 8 Button
-        addNumButton(rootControls, "9", 2, 2); // 9 Button
-        addNumButton(rootControls, ".", 2, 5); // Decimal Button
+        rootControls.add(addNumButton("0", 1, 5)); // 0 Button
+        rootControls.add(addNumButton("1", 0, 4)); // 1 Button
+        rootControls.add(addNumButton("2", 1, 4)); // 2 Button
+        rootControls.add(addNumButton("3", 2, 4)); // 3 Button
+        rootControls.add(addNumButton("4", 0, 3)); // 4 Button
+        rootControls.add(addNumButton("5", 1, 3)); // 5 Button
+        rootControls.add(addNumButton("6", 2, 3)); // 6 Button
+        rootControls.add(addNumButton("7", 0, 2)); // 7 Button
+        rootControls.add(addNumButton("8", 1, 2)); // 8 Button
+        rootControls.add(addNumButton("9", 2, 2)); // 9 Button
+        rootControls.add(addNumButton(".", 2, 5)); // Decimal Button
 
         // Create all operator buttons
-        addOperButton(rootControls, Calculator.ADD_OP, 3, 4);       // Add Button
-        addOperButton(rootControls, Calculator.SUB_OP, 3, 3);       // Subtract Button
-        addOperButton(rootControls, Calculator.MULT_OP, 3, 2);      // Multiply Button
-        addOperButton(rootControls, Calculator.DIV_OP, 3, 1);       // Divide Button
-        addOperButton(rootControls, Calculator.NEG_OP, 0, 5);       // Negate Button
-        addOperButton(rootControls, Calculator.SQ_OP, 2, 1);        // Square Button
-        addOperButton(rootControls, Calculator.POW_OP, 1, 1);       // Power Button
-        addOperButton(rootControls, Calculator.SQRT_OP, 0, 1);      // Square Root Button
+        rootControls.add(addOperButton(Calculator.ADD_OP, 3, 4));       // Add Button
+        rootControls.add(addOperButton(Calculator.SUB_OP, 3, 3));       // Subtract Button
+        rootControls.add(addOperButton(Calculator.MULT_OP, 3, 2));      // Multiply Button
+        rootControls.add(addOperButton(Calculator.DIV_OP, 3, 1));       // Divide Button
+        rootControls.add(addOperButton(Calculator.NEG_OP, 0, 5));       // Negate Button
+        rootControls.add(addOperButton(Calculator.SQ_OP, 2, 1));        // Square Button
+        rootControls.add(addOperButton(Calculator.POW_OP, 1, 1));       // Power Button
+        rootControls.add(addOperButton(Calculator.SQRT_OP, 0, 1));      // Square Root Button
 
         // Scene
         Group root = new Group(entryTextField, buttonEq, buttonClear, buttonClearEntry, buttonBackspace, buttonSlider, sliderTextField, slider);
